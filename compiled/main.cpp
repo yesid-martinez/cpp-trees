@@ -1,9 +1,13 @@
 #include <iostream>
 using namespace std;
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+struct Node{
+	int info;
+	Node * left, * right;
+	// int * left, right; // 'left' would indeed be of type int*, but 'right' would be of type int.
+};
 
 int main(int argc, char** argv) {
-	std::cout << "Hello world!";
-	
+    std::cout << "Hello world!";
 	return 0;
 }
