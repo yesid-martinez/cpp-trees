@@ -1,4 +1,8 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <cctype>
+#include <limits>
 using namespace std;
 
 struct Node{
@@ -6,59 +10,112 @@ struct Node{
 	Node * left, * right;
 	// int * left, right; // 'left' would indeed be of type int*, but 'right' would be of type int.
 };
+int weight = 3; // Simple binary tree by default
 
 int main(int argc, char** argv) {
-    int option = 0;
+	string input;
+	int option;
     
     do{
-    	std::cout << " -- MAIN OPTIONS -- " << endl;
-        std::cout << "1. Tree Weight" << endl;
-        std::cout << "2. Create tree" << endl;
-		std::cout << "3. Print Tree" << endl;
-        std::cout << "4. Pre-order" << endl;
-        std::cout << "5. In-order" << endl;
-        std::cout << "6. Post-order" << endl;
-        std::cout << "7. Print tree properties" << endl;
-        std::cout << "8. Print leaf nodes" << endl;
-        std::cout << "9. Delete tree" << endl;
-        std::cout << "10. Close application" << endl;
-    	std::cout << "\n" << endl;
-        std::cout << " - Select a option: ";
-        std::cin >> option;
-    
-        switch(option){
-            case 1:
-                std::cout << " -- Tree Weight -- " << endl;
+    	option = 0;
+    	cout << "\n" << endl;
+    	cout << " -- MAIN OPTIONS -- " << endl;
+        cout << "1. Tree Weight" << endl;
+        cout << "2. Create tree" << endl;
+		cout << "3. Print Tree" << endl;
+        cout << "4. Pre-order" << endl;
+        cout << "5. In-order" << endl;
+        cout << "6. Post-order" << endl;
+        cout << "7. Print tree properties" << endl;
+        cout << "8. Print leaf nodes" << endl;
+        cout << "9. Delete tree" << endl;
+        cout << "10. Close application" << endl;
+    	cout << "\n" << endl;
+        cout << " - Select a option: ";
+        getline(cin, input);
+        
+        stringstream ss(input);
+        ss >> option;
+        
+		switch(option){
+            case 1:{
+           		string opt;
+		            
+				cout << "\n" << endl;
+		        cout << "Current tree weight: " << weight << endl;
+				cout << "Do you want to change weight value?  Yes (y) or Not (n)" << endl;
+				getline(cin, opt);
+				
+				char upperOpt = toupper(opt[0]);
+				
+				switch(upperOpt){
+            		case 'Y':{
+	            		string input;
+	            		int value;
+	            		
+						cout << "\n" << endl;
+						cout << "Enter new weight value: ";
+						getline(cin, input);
+            		
+ 						stringstream ss(input);
+ 						ss >> value;
+				        if (!value || value < 0) {
+				    		cout << "\n" << endl;
+							cout << "Invalid input!  Enter positive integer value." << endl;
+							continue;
+						}
+						
+						weight = value;
+						cout << "\n" << endl;
+						cout << "Weight updated successfully!" << endl;
+						cout << "New weight value: " << weight << endl;
+					}
+					break;
+            		case 'N':
+ 						cout << "\n" << endl;
+						cout << "Got it!" << endl;
+            		break;
+            		default:
+     					cout << "\n" << endl;
+     					cout << "Invalid input!  Enter (y) or (n)" << endl;
+     				break;
+				}
+			}
             break;
             case 2:
-                std::cout << " -- Create tree -- " << endl;
+                cout << " -- Create tree -- " << endl;
             break;
             case 3:
-                std::cout << " -- Print Tree -- " << endl;
+                cout << " -- Print Tree -- " << endl;
             break;
             case 4:
-            	std::cout << " -- Pre-order -- " << endl;
+            	cout << " -- Pre-order -- " << endl;
             break;
             case 5:
-            	std::cout << " -- In-order -- " << endl;
+            	cout << " -- In-order -- " << endl;
             break;
             case 6:
-            	std::cout << " -- Post-order -- " << endl;
+            	cout << " -- Post-order -- " << endl;
             break;
             case 7:
-            	std::cout << " -- Print tree properties -- " << endl;
+            	cout << " -- Print tree properties -- " << endl;
             break;
             case 8:
-            	std::cout << " -- Print leaf nodes -- " << endl;
+            	cout << " -- Print leaf nodes -- " << endl;
             break;
             case 9:
-            	std::cout << " -- Delete tree -- " << endl;
+            	cout << " -- Delete tree -- " << endl;
             break;
             case 10:
-                std::cout << " - Finishing program..." << endl;
+            	cout << "\n" << endl;            
+                cout << " - Finishing program..." << endl;
+            	cout << "\n" << endl;
+			break;
+            default:
+            	cout << "\n" << endl;
+            	cout << "Invalid input! Select a valid option." << endl;
             break;
-        }
-        
+        }    
     }while(option != 10);
 	return 0;
 }
