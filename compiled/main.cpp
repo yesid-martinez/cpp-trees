@@ -8,9 +8,50 @@ using namespace std;
 struct Node{
 	int info;
 	Node * left, * right;
-	// int * left, right; // 'left' would indeed be of type int*, but 'right' would be of type int.
 };
-int weight = 3; // Simple binary tree by default
+
+int weight = 3; // Nodes quantity - Simple binary tree by default
+Node* root = nullptr;
+
+bool isEmpty(Node * node){
+	if(node == nullptr){
+		return true;
+	}
+	if(100 > node->info > 999){
+		cout << node->info << endl;
+		return true;	
+	}
+	return false;
+}
+
+Node* createTree(Node * root){
+    if(isEmpty(root)){
+        Node * root = new Node();
+        cout << "New node created!" << endl;
+        root->info = 111;
+        return root;
+    }
+    return root;
+};
+
+void printTree(Node * node){
+	if(isEmpty(node)){
+		cout <<"There is no nodes to print" << endl;
+		return;
+	}
+	cout << node->info << endl;
+}
+
+void deleteTree(Node* node) {
+    if (node == nullptr) return;
+    
+    deleteTree(node->left);
+    deleteTree(node->right);
+    
+    delete node;
+    
+    cout << "Root have been deleted!" << endl;
+}
 
 int main(int argc, char** argv) {
 	string input;
@@ -84,9 +125,11 @@ int main(int argc, char** argv) {
             break;
             case 2:
                 cout << " -- Create tree -- " << endl;
+                root = createTree(root);
             break;
             case 3:
                 cout << " -- Print Tree -- " << endl;
+                printTree(root);
             break;
             case 4:
             	cout << " -- Pre-order -- " << endl;
@@ -105,6 +148,8 @@ int main(int argc, char** argv) {
             break;
             case 9:
             	cout << " -- Delete tree -- " << endl;
+            	deleteTree(root);
+            	root = nullptr;
             break;
             case 10:
             	cout << "\n" << endl;            
