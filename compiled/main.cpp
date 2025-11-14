@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cctype>
 #include <limits>
+#include <queue>
 using namespace std;
 
 struct Node{
@@ -17,6 +18,7 @@ bool isEmpty(Node * node){
 	if(node == nullptr){
 		return true;
 	}
+	// Verify trash directions
 	if(100 > node->info > 999){
 		cout << node->info << endl;
 		return true;	
@@ -24,33 +26,90 @@ bool isEmpty(Node * node){
 	return false;
 }
 
-Node* createTree(Node * root){
-    if(isEmpty(root)){
-        Node * root = new Node();
-        cout << "New node created!" << endl;
-        root->info = 111;
-        return root;
-    }
-    return root;
-};
-
-void printTree(Node * node){
-	if(isEmpty(node)){
-		cout <<"There is no nodes to print" << endl;
-		return;
-	}
-	cout << node->info << endl;
-}
-
-void deleteTree(Node* node) {
+void deleteTree(Node *& node) {
     if (node == nullptr) return;
     
     deleteTree(node->left);
     deleteTree(node->right);
     
     delete node;
+    // Fix dangling pointer
+    node = nullptr;
+}
+
+Node* createTree(Node * root){
+    if(isEmpty(root)){
+        root = new Node();
+        cout << "New node created!" << endl;
+        root->info = 111;
+        root->left = nullptr;
+        root->right = nullptr;
+    }else{
+    	delete(root);
+    	root = new Node();
+    	root->info = 111;
+	}
+    return root;
+}
+
+void BFS(Node * root){
+	queue<Node*> q;
+	q.push(root);
     
-    cout << "Root have been deleted!" << endl;
+ 	int created = 1;
+    int limit = weight;
+
+    while (!q.empty() && created < limit) {
+        Node* current = q.front();
+        q.pop();
+
+        if (current->left == nullptr && created < limit) {
+            current->left = new Node();
+            current->left->info = 222;
+            current->left->left = nullptr;
+            current->left->right = nullptr;
+            created++;
+        }
+
+        if (current->right == nullptr && created < limit) {
+            current->right = new Node();
+            current->right->info = 333;
+            current->right->left = nullptr;
+            current->right->right = nullptr;
+            created++;
+        }
+
+        if (current->left)  q.push(current->left);
+        if (current->right) q.push(current->right);
+    }
+}
+
+void printTree(Node* node) {
+    if (isEmpty(root)) {
+        cout << "There is no nodes to print" << endl;
+        return;
+    }
+
+    queue<Node*> q;
+    q.push(node);
+
+    cout << "Tree (BFS - level order):" << endl;
+
+    while (!q.empty()) {
+        int levelSize = q.size();
+
+        for (int i = 0; i < levelSize; i++) {
+            Node* current = q.front();
+            q.pop();
+
+            cout << current->info << " ";
+
+            if (current->left  != nullptr) q.push(current->left);
+            if (current->right != nullptr) q.push(current->right);
+        }
+
+        cout << endl;
+    }
 }
 
 void updateWeight(){
@@ -129,6 +188,7 @@ int main(int argc, char** argv) {
             case 2:
                 cout << " -- Create tree -- " << endl;
                 root = createTree(root);
+                BFS(root);
             break;
             case 3:
                 cout << " -- Print Tree -- " << endl;
@@ -152,7 +212,6 @@ int main(int argc, char** argv) {
             case 9:
             	cout << " -- Delete tree -- " << endl;
             	deleteTree(root);
-            	root = nullptr;
             break;
             case 10:
             	cout << "\n" << endl;            
