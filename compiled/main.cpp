@@ -168,6 +168,27 @@ void updateWeight(){
 	}
 }
 
+void printLeafNodes(Node* node) {
+    if (!node) return;
+
+    if (!node->left && !node->right) {
+        cout << node->info << " ";
+        return;
+    }
+    if (node->left) printLeafNodes(node->left);
+    if (node->right) printLeafNodes(node->right);
+}
+
+void printLeaves(Node* root) {
+    if (!root) {
+        cout << "Tree is empty.\n";
+        return;
+    }
+    cout << "Leaf nodes: ";
+    printLeafNodes(root);
+    cout << endl;
+}
+
 int main(int argc, char** argv) {
 	string input;
 	int option;
@@ -220,7 +241,8 @@ int main(int argc, char** argv) {
             break;
             case 8:
             	cout << " -- Print leaf nodes -- " << endl;
-            break;
+            	printLeaves(root);
+			break;
             case 9:
             	cout << " -- Delete tree -- " << endl;
             	deleteTree(root);
