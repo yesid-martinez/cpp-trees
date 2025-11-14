@@ -53,6 +53,50 @@ void deleteTree(Node* node) {
     cout << "Root have been deleted!" << endl;
 }
 
+void updateWeight(){
+	string opt;
+		            
+	cout << "\n" << endl;
+    cout << "Current tree weight: " << weight << endl;
+	cout << "Do you want to change weight value?  Yes (y) or Not (n)" << endl;
+	getline(cin, opt);
+	
+	char upperOpt = toupper(opt[0]);
+
+	switch(upperOpt){
+		case 'Y':{
+			string input;
+			int value;
+			
+			cout << "\n" << endl;
+			cout << "Enter new weight value: ";
+			getline(cin, input);
+		
+			stringstream ss(input);
+			ss >> value;
+	        if (!value || value < 0) {
+	    		cout << "\n" << endl;
+				cout << "Invalid input!  Enter positive integer value." << endl;
+				break;
+			}
+			
+			weight = value;
+			cout << "\n" << endl;
+			cout << "Weight updated successfully!" << endl;
+			cout << "New weight value: " << weight << endl;
+		}
+		break;
+		case 'N':
+			cout << "\n" << endl;
+			cout << "Got it!" << endl;
+		break;
+		default:
+			cout << "\n" << endl;
+			cout << "Invalid input!  Enter (y) or (n)" << endl;
+		break;
+	}
+}
+
 int main(int argc, char** argv) {
 	string input;
 	int option;
@@ -79,49 +123,8 @@ int main(int argc, char** argv) {
         ss >> option;
         
 		switch(option){
-            case 1:{
-           		string opt;
-		            
-				cout << "\n" << endl;
-		        cout << "Current tree weight: " << weight << endl;
-				cout << "Do you want to change weight value?  Yes (y) or Not (n)" << endl;
-				getline(cin, opt);
-				
-				char upperOpt = toupper(opt[0]);
-				
-				switch(upperOpt){
-            		case 'Y':{
-	            		string input;
-	            		int value;
-	            		
-						cout << "\n" << endl;
-						cout << "Enter new weight value: ";
-						getline(cin, input);
-            		
- 						stringstream ss(input);
- 						ss >> value;
-				        if (!value || value < 0) {
-				    		cout << "\n" << endl;
-							cout << "Invalid input!  Enter positive integer value." << endl;
-							continue;
-						}
-						
-						weight = value;
-						cout << "\n" << endl;
-						cout << "Weight updated successfully!" << endl;
-						cout << "New weight value: " << weight << endl;
-					}
-					break;
-            		case 'N':
- 						cout << "\n" << endl;
-						cout << "Got it!" << endl;
-            		break;
-            		default:
-     					cout << "\n" << endl;
-     					cout << "Invalid input!  Enter (y) or (n)" << endl;
-     				break;
-				}
-			}
+            case 1:
+            	updateWeight();
             break;
             case 2:
                 cout << " -- Create tree -- " << endl;
