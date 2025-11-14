@@ -19,11 +19,6 @@ bool isEmpty(Node * node){
 	if(node == nullptr){
 		return true;
 	}
-	// Verify trash directions
-	if(100 > node->info > 999){
-		cout << node->info << endl;
-		return true;	
-	}
 	return false;
 }
 
@@ -62,6 +57,8 @@ Node* createTree(Node * root){
     	delete(root);
     	root = new Node();
     	root->info = PRNG();
+    	root->left = nullptr;
+    	root->right = nullptr;
 	}
     return root;
 }
