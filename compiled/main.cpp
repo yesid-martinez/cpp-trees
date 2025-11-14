@@ -46,16 +46,17 @@ int PRNG() {
     return dist(gen);
 }
 
-Node* createTree(Node * root){
+Node* createRoot(Node * root){
     if(isEmpty(root)){
         root = new Node();
-        cout << "New node created!" << endl;
+    	cout << "A new tree have been created!" << endl;
         root->info = PRNG();
         root->left = nullptr;
         root->right = nullptr;
     }else{
     	delete(root);
     	root = new Node();
+    	cout << "A new tree have been created!" << endl;
     	root->info = PRNG();
     	root->left = nullptr;
     	root->right = nullptr;
@@ -198,7 +199,7 @@ int main(int argc, char** argv) {
             break;
             case 2:
                 cout << " -- Create tree -- " << endl;
-                root = createTree(root);
+                root = createRoot(root);
                 BFS(root);
             break;
             case 3:
