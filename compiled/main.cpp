@@ -64,31 +64,31 @@ Node* createRoot(Node * root){
     return root;
 }
 
+int countNodes(Node* node) {
+    if (!node) return 0;
+    return 1 + countNodes(node->left) + countNodes(node->right);
+}
+
 void BFS(Node * root){
 	queue<Node*> q;
 	q.push(root);
-    
- 	int created = 1;
-    int limit = weight;
 
-    while (!q.empty() && created < limit) {
+    while (!q.empty() && countNodes(root) < weight) {
         Node* current = q.front();
         q.pop();
 
-        if (current->left == nullptr && created < limit) {
+        if (current->left == nullptr && countNodes(root) < weight) {
             current->left = new Node();
             current->left->info = PRNG();
             current->left->left = nullptr;
             current->left->right = nullptr;
-            created++;
         }
 
-        if (current->right == nullptr && created < limit) {
+        if (current->right == nullptr && countNodes(root) < weight) {
             current->right = new Node();
             current->right->info = PRNG();
             current->right->left = nullptr;
             current->right->right = nullptr;
-            created++;
         }
 
         if (current->left)  q.push(current->left);
