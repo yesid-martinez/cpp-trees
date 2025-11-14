@@ -2,8 +2,9 @@
 #include <string>
 #include <sstream>
 #include <cctype>
-#include <limits>
 #include <queue>
+#include <random>
+
 using namespace std;
 
 struct Node{
@@ -37,17 +38,30 @@ void deleteTree(Node *& node) {
     node = nullptr;
 }
 
+// Pseudo-Random Number Generator
+int PRNG() {
+	constexpr int MIN_INFO = 100;
+	constexpr int MAX_INFO = 999;
+    
+	static random_device rd; // Entropy source used to initialize the PRNG seed
+	// Mersenne Twister - High-quality random engine
+    static mt19937 gen(rd()); // Build MT engine with random seed from rd
+    static uniform_int_distribution<int> dist(MIN_INFO, MAX_INFO); // Transform number into defined ranges
+
+    return dist(gen);
+}
+
 Node* createTree(Node * root){
     if(isEmpty(root)){
         root = new Node();
         cout << "New node created!" << endl;
-        root->info = 111;
+        root->info = PRNG();
         root->left = nullptr;
         root->right = nullptr;
     }else{
     	delete(root);
     	root = new Node();
-    	root->info = 111;
+    	root->info = PRNG();
 	}
     return root;
 }
@@ -65,7 +79,7 @@ void BFS(Node * root){
 
         if (current->left == nullptr && created < limit) {
             current->left = new Node();
-            current->left->info = 222;
+            current->left->info = PRNG();
             current->left->left = nullptr;
             current->left->right = nullptr;
             created++;
@@ -73,7 +87,7 @@ void BFS(Node * root){
 
         if (current->right == nullptr && created < limit) {
             current->right = new Node();
-            current->right->info = 333;
+            current->right->info = PRNG();
             current->right->left = nullptr;
             current->right->right = nullptr;
             created++;
