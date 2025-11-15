@@ -243,6 +243,30 @@ void printProperties(Node* root) {
     cout << "- Balanced: " << (balanced ? "Yes" : "No") << endl;
 }
 
+// Pre-order: Root -> Left -> Right
+void preOrder(Node* node) {
+    if (!node) return;
+    cout << node->info << " ";
+    preOrder(node->left);
+    preOrder(node->right);
+}
+
+// In-order: Left -> Root -> Right
+void inOrder(Node* node) {
+    if (!node) return;
+    inOrder(node->left);
+    cout << node->info << " ";
+    inOrder(node->right);
+}
+
+// Post-order: Left -> Right -> Root
+void postOrder(Node* node) {
+    if (!node) return;
+    postOrder(node->left);
+    postOrder(node->right);
+    cout << node->info << " ";
+}
+
 int main(int argc, char** argv) {
 	string input;
 	int option;
@@ -283,12 +307,15 @@ int main(int argc, char** argv) {
             break;
             case 4:
             	cout << " -- Pre-order -- " << endl;
+            	preOrder(root);
             break;
             case 5:
             	cout << " -- In-order -- " << endl;
+            	inOrder(root);
             break;
             case 6:
             	cout << " -- Post-order -- " << endl;
+            	postOrder(root);
             break;
             case 7:
             	cout << " -- Print tree properties -- " << endl;
