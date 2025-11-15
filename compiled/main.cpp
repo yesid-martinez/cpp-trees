@@ -189,6 +189,60 @@ void printLeaves(Node* root) {
     cout << endl;
 }
 
+int treeHeight(Node* node) {
+    if (!node) return 0;
+    return 1 + max(treeHeight(node->left), treeHeight(node->right));
+}
+
+bool validateLeaves(Node* node, int level, int maxLevel, bool& valid) {
+    if (!node) return true;
+
+    if (node->left == nullptr && node->right == nullptr) {
+        if (level != maxLevel) {
+            valid = false;
+        }
+        return valid;
+    }
+
+    if (node->left != nullptr && node->right == nullptr) {
+        valid = false;
+        return false;
+    }
+
+    validateLeaves(node->left, level + 1, maxLevel, valid);
+    validateLeaves(node->right, level + 1, maxLevel, valid);
+
+    return valid;
+}
+
+bool isBalancedStructure(Node* root) {
+    if (!root) return true;
+
+    int h = treeHeight(root);
+    bool valid = true;
+
+    validateLeaves(root, 1, h, valid);
+
+    return valid;
+}
+
+void printProperties(Node* root) {
+    if (!root) {
+        cout << "Tree is empty.\n";
+        return;
+    }
+    
+    int n = countNodes(root);
+    int h = treeHeight(root);
+    bool balanced = isBalancedStructure(root);
+        
+    cout << "Tree properties:\n";
+    cout << "- Node count (weight): " << countNodes(root) << endl;
+    cout << "- Tree height: " << treeHeight(root) << endl;
+    cout << "- Max degree: 2\n"; // Binary tree by default
+    cout << "- Balanced: " << (balanced ? "Yes" : "No") << endl;
+}
+
 int main(int argc, char** argv) {
 	string input;
 	int option;
@@ -238,6 +292,7 @@ int main(int argc, char** argv) {
             break;
             case 7:
             	cout << " -- Print tree properties -- " << endl;
+            	printProperties(root);
             break;
             case 8:
             	cout << " -- Print leaf nodes -- " << endl;
